@@ -1,0 +1,10 @@
+name: TransferItems
+version: 1.0
+main: theandrey.transferitems.TransferItemsPlugin
+depend: [PowerNBT]
+author: TheAndrey
+commands:
+    putitems:
+        permission: transferitems.put
+    getitems:
+        permission: transferitems.get
