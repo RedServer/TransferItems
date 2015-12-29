@@ -49,7 +49,11 @@ public class TransferItemsPlugin extends JavaPlugin implements Listener {
 	}
 
 	public ExecutorService getExecutor() {
-		if(executor == null) executor = Executors.newSingleThreadExecutor();
+		if(executor == null) executor = Executors.newSingleThreadExecutor((Runnable r) -> {
+				Thread t = new Thread(r);
+				t.setName(TransferItemsPlugin.this.getName() + "-ThreadPool-" + t.getId());
+				return t;
+			});
 		return executor;
 	}
 
