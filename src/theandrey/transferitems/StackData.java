@@ -2,7 +2,6 @@ package theandrey.transferitems;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.dpohvar.powernbt.nbt.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +15,6 @@ public final class StackData {
 	private int amount;
 	private short damage;
 	private String nbt;
-	private NBTBase tag;
 
 	public int getEntryId() {
 		return entryId;
@@ -38,10 +36,6 @@ public final class StackData {
 		return nbt;
 	}
 
-	public NBTBase getTag() {
-		return tag;
-	}
-
 	/**
 	 * Создаёт ItemStack
 	 * @return ItemStack без NBT (свойства можно записывать только после выдачи предмета игроку).
@@ -53,7 +47,9 @@ public final class StackData {
 			if(mat == null) throw new InvalidItemStackException("Неизвестный материал: " + material);
 			if(amount <= 0) throw new InvalidItemStackException("Неправильное количество: " + amount);
 			ItemStack stack = new ItemStack(mat, amount, damage);
-			if(nbt != null && !nbt.isEmpty()) tag = JsonToNBT.parse(nbt);
+			if(nbt != null) {
+				stack = Utils.createCraftItemStack(stack);
+			}
 			return stack;
 		} catch (Throwable ex) {
 			throw new InvalidItemStackException("Ошибка создания ItemStack", ex);
@@ -76,9 +72,7 @@ public final class StackData {
 		data.amount = stack.getAmount();
 		if(data.amount <= 0 || data.amount > 64) throw new InvalidItemStackException("Неправильное кол-во: " + data.amount);
 		data.damage = stack.getDurability();
-
-		NBTBase nbttag = Utils.readNBT(stack);
-		data.nbt = (nbttag != null) ? NBTToJson.encode(nbttag) : null;
+		data.nbt = Utils.readNBT(stack);
 		return data;
 	}
 
