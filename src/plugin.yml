@@ -1,7 +1,6 @@
 name: TransferItems
 version: 1.0
 main: theandrey.transferitems.TransferItemsPlugin
-depend: [PowerNBT]
 author: TheAndrey
 commands:
     putitems:
