@@ -49,6 +49,7 @@ public final class StackData {
 			ItemStack stack = new ItemStack(mat, amount, damage);
 			if(nbt != null) {
 				stack = Utils.createCraftItemStack(stack);
+				Utils.placeNBT(stack, nbt);
 			}
 			return stack;
 		} catch (Throwable ex) {

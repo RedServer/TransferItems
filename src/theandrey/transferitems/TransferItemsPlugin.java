@@ -126,7 +126,6 @@ public class TransferItemsPlugin extends JavaPlugin implements Listener {
 												ItemStack slot = inv.getItem(i);
 												if(slot == null || slot.getType() == Material.AIR || slot.getAmount() <= 0) {
 													inv.setItem(i, stack);
-													if(stackdata.getNBT() != null) Utils.placeNBT(stack, stackdata.getNBT()); // Записываем NBT только после помещения в инвентарь
 													removeEntries.add(stackdata.getEntryId());
 													slotFound = true;
 													break;
